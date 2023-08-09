@@ -8,7 +8,10 @@ mod vga_buffer;
 mod serial;
 mod testing_stuff;
 
+extern crate alloc;
+
 use core::panic::PanicInfo;
+use alloc::boxed::Box;
 use bootloader::{BootInfo, entry_point, bootinfo};
 use x708a::memory::BootInfoFrameAllocator;
 use x86_64::{VirtAddr, structures::paging::{PageTable, Page}};
@@ -34,6 +37,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
     let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
     unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e) };
     
+    let x = Box::new(41);
 
     #[cfg(test)]
     test_main();
