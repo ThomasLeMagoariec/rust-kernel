@@ -1,1 +1,4 @@
-stack_overflow::stack_overflow...	[ok]
+Running 3 tests!
+heap_allocation::large_vec...	[ok]
+heap_allocation::many_boxes...	[ok]
+heap_allocation::simple_allocation...	[ok]
