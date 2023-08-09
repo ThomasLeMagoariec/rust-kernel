@@ -10,19 +10,19 @@ mod testing_stuff;
 
 use core::panic::PanicInfo;
 use bootloader::{BootInfo, entry_point, bootinfo};
-use x708a::memory::active_level_4_table;
 use x86_64::{VirtAddr, structures::paging::PageTable};
 
 entry_point!(kernel_main);
 
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-    use x86_64::registers::control::Cr3;
-    use x708a::memory::translate_addr;
+    use x708a::memory;
+    use x86_64::{structures::paging::Translate, VirtAddr};
 
     println!("Hello World{}", "!");
     x708a::init();
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+    let mapper = unsafe { memory::init(phys_mem_offset) };
 
     let addresses = [
         0xb8000,
@@ -33,7 +33,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
     for &address in &addresses {
         let virt = VirtAddr::new(address);
-        let phys = unsafe { translate_addr(virt, phys_mem_offset) };
+        let phys = mapper.translate_addr(virt);
         println!("{:?} -> {:?}", virt, phys);
     }
 
