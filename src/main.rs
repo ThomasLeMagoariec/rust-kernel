@@ -10,8 +10,10 @@ mod testing_stuff;
 
 use core::panic::PanicInfo;
 
+use bootloader::BootInfo;
+
 #[no_mangle]
-pub extern "C" fn _start() -> ! {
+pub extern "C" fn _start(boot_info: &'static BootInfo) -> ! {
     println!("Hello World{}", "!");
 
     x708a::init();
