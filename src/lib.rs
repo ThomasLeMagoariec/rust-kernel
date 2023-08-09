@@ -10,6 +10,7 @@ pub mod vga_buffer;
 pub mod testing_stuff;
 pub mod interrupts;
 pub mod gdt;
+pub mod memory;
 
 use core::panic::PanicInfo;
 
