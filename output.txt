@@ -1,0 +1,2 @@
+Building bootloader
+Running: `qemu-system-x86_64 -drive format=raw,file=target\x86_64-x708a\debug\bootimage-x708a.bin`
