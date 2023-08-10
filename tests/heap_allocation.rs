@@ -8,7 +8,7 @@ extern crate alloc;
 
 use alloc::{boxed::Box, vec::Vec};
 use bootloader::{entry_point, BootInfo};
-use x708a::allocator::HEAP_SIZE;
+use x708a::{allocator::HEAP_SIZE, serial_println, serial_print};
 use core::panic::PanicInfo;
 
 entry_point!(main);
@@ -54,6 +54,7 @@ fn large_vec() {
     assert_eq!(vec.iter().sum::<u64>(), (n - 1) * n / 2);
 }
 
+
 #[test_case]
 fn many_boxes() {
     for i in 0..HEAP_SIZE {
@@ -62,13 +63,13 @@ fn many_boxes() {
     }
 }
 
-
 #[test_case]
 fn many_boxes_long_lived() {
     let long_lived = Box::new(1);
 
     for i in 0..HEAP_SIZE {
         let x = Box::new(i);
+        serial_print!("{} ", x);
         assert_eq!(*x, i);
     }
 

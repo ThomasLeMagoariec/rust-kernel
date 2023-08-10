@@ -1,13 +1,14 @@
 use x86_64::{structures::paging::{Mapper, Size4KiB, FrameAllocator, mapper::MapToError, Page, PageTableFlags}, VirtAddr};
 
-use self::{bump::BumpAllocator, linked_list::LinkedListAllocator};
+use self::{bump::BumpAllocator, linked_list::LinkedListAllocator, fixed_size_block::FixedSizeBlockAllocator};
 
 // ! types of allocators
 pub mod bump;
 pub mod linked_list;
+pub mod fixed_size_block;
 
 #[global_allocator]
-static ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
+static ALLOCATOR: Locked<FixedSizeBlockAllocator> = Locked::new(FixedSizeBlockAllocator::new());
 
 pub const HEAP_START: usize = 0x_4444_4444_0000;
 pub const HEAP_SIZE: usize = 100 * 1024; // ! 100 Kb (can be increased)
