@@ -5,16 +5,14 @@
 #![reexport_test_harness_main = "test_main"]
 
 mod vga_buffer;
-mod serial;
-mod testing_stuff;
 
 extern crate alloc;
 
 use core::panic::PanicInfo;
 use alloc::{boxed::Box, rc::Rc, vec::Vec};
-use bootloader::{BootInfo, entry_point, bootinfo};
+use bootloader::{BootInfo, entry_point};
 use x708a::memory::BootInfoFrameAllocator;
-use x86_64::{VirtAddr, structures::paging::{PageTable, Page}};
+use x86_64::VirtAddr;
 
 entry_point!(kernel_main);
 

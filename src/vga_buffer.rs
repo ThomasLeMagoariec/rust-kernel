@@ -2,6 +2,7 @@ use volatile::Volatile;
 use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
+
 use crate::println;
 
 #[allow(dead_code)]
